@@ -1,0 +1,36 @@
+openapi: 3.0.3
+info:
+  title: Hydra
+  version: 1.0.0
+
+paths:
+  /api/urls:
+    post:
+      tags: [urls]
+      operationId: createShortUrl
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUrlRequest'
+      responses:
+        '200':
+          description: The generated short code
+          content:
+            text/plain:
+              schema:
+                type: string
+        '400':
+          description: Invalid URL
+
+components:
+  schemas:
+    CreateUrlRequest:
+      type: object
+      required: [url]
+      properties:
+        url:
+          type: string
+          maxLength: 2048
+          pattern: '^https?://.+'
